@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yc.petshop.dao.PetsMapper">
+  <resultMap id="BaseResultMap" type="com.yc.petshop.bean.Pets">
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="pname" jdbcType="VARCHAR" property="pname" />
+    <result column="page" jdbcType="TIMESTAMP" property="page" />
+    <result column="psex" jdbcType="INTEGER" property="psex" />
+    <result column="ptype" jdbcType="VARCHAR" property="ptype" />
+    <result column="pdate" jdbcType="DATE" property="pdate" />
+    <result column="psale" jdbcType="INTEGER" property="psale" />
+    <result column="pimage" jdbcType="VARCHAR" property="pimage" />
+    <result column="pdesc" jdbcType="VARCHAR" property="pdesc" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    pid, pname, page, psex, ptype, pdate, psale, pimage, pdesc
+  </sql>
+  <select id="selectByExample" parameterType="com.yc.petshop.bean.PetsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pets
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.yc.petshop.bean.PetsExample">
+    delete from pets
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yc.petshop.bean.Pets">
+    insert into pets (pid, pname, page, 
+      psex, ptype, pdate, psale, 
+      pimage, pdesc)
+    values (#{pid,jdbcType=INTEGER}, #{pname,jdbcType=VARCHAR}, #{page,jdbcType=TIMESTAMP}, 
+      #{psex,jdbcType=INTEGER}, #{ptype,jdbcType=VARCHAR}, #{pdate,jdbcType=DATE}, #{psale,jdbcType=INTEGER}, 
+      #{pimage,jdbcType=VARCHAR}, #{pdesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yc.petshop.bean.Pets">
+    insert into pets
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="pname != null">
+        pname,
+      </if>
+      <if test="page != null">
+        page,
+      </if>
+      <if test="psex != null">
+        psex,
+      </if>
+      <if test="ptype != null">
+        ptype,
+      </if>
+      <if test="pdate != null">
+        pdate,
+      </if>
+      <if test="psale != null">
+        psale,
+      </if>
+      <if test="pimage != null">
+        pimage,
+      </if>
+      <if test="pdesc != null">
+        pdesc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="pname != null">
+        #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="page != null">
+        #{page,jdbcType=TIMESTAMP},
+      </if>
+      <if test="psex != null">
+        #{psex,jdbcType=INTEGER},
+      </if>
+      <if test="ptype != null">
+        #{ptype,jdbcType=VARCHAR},
+      </if>
+      <if test="pdate != null">
+        #{pdate,jdbcType=DATE},
+      </if>
+      <if test="psale != null">
+        #{psale,jdbcType=INTEGER},
+      </if>
+      <if test="pimage != null">
+        #{pimage,jdbcType=VARCHAR},
+      </if>
+      <if test="pdesc != null">
+        #{pdesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yc.petshop.bean.PetsExample" resultType="java.lang.Long">
+    select count(*) from pets
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pets
+    <set>
+      <if test="record.pid != null">
+        pid = #{record.pid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pname != null">
+        pname = #{record.pname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.page != null">
+        page = #{record.page,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.psex != null">
+        psex = #{record.psex,jdbcType=INTEGER},
+      </if>
+      <if test="record.ptype != null">
+        ptype = #{record.ptype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pdate != null">
+        pdate = #{record.pdate,jdbcType=DATE},
+      </if>
+      <if test="record.psale != null">
+        psale = #{record.psale,jdbcType=INTEGER},
+      </if>
+      <if test="record.pimage != null">
+        pimage = #{record.pimage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pdesc != null">
+        pdesc = #{record.pdesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pets
+    set pid = #{record.pid,jdbcType=INTEGER},
+      pname = #{record.pname,jdbcType=VARCHAR},
+      page = #{record.page,jdbcType=TIMESTAMP},
+      psex = #{record.psex,jdbcType=INTEGER},
+      ptype = #{record.ptype,jdbcType=VARCHAR},
+      pdate = #{record.pdate,jdbcType=DATE},
+      psale = #{record.psale,jdbcType=INTEGER},
+      pimage = #{record.pimage,jdbcType=VARCHAR},
+      pdesc = #{record.pdesc,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <resultMap id="BaseResultMap" type="com.yc.petshop.bean.Pets">
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="pname" jdbcType="VARCHAR" property="pname" />
+    <result column="page" jdbcType="TIMESTAMP" property="page" />
+    <result column="psex" jdbcType="INTEGER" property="psex" />
+    <result column="ptype" jdbcType="VARCHAR" property="ptype" />
+    <result column="pdate" jdbcType="DATE" property="pdate" />
+    <result column="psale" jdbcType="INTEGER" property="psale" />
+    <result column="pimage" jdbcType="VARCHAR" property="pimage" />
+    <result column="pdesc" jdbcType="VARCHAR" property="pdesc" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    pid, pname, page, psex, ptype, pdate, psale, pimage, pdesc
+  </sql>
+  <select id="selectByExample" parameterType="com.yc.petshop.bean.PetsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pets
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.yc.petshop.bean.PetsExample">
+    delete from pets
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yc.petshop.bean.Pets">
+    insert into pets (pid, pname, page, 
+      psex, ptype, pdate, psale, 
+      pimage, pdesc)
+    values (#{pid,jdbcType=INTEGER}, #{pname,jdbcType=VARCHAR}, #{page,jdbcType=TIMESTAMP}, 
+      #{psex,jdbcType=INTEGER}, #{ptype,jdbcType=VARCHAR}, #{pdate,jdbcType=DATE}, #{psale,jdbcType=INTEGER}, 
+      #{pimage,jdbcType=VARCHAR}, #{pdesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yc.petshop.bean.Pets">
+    insert into pets
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="pname != null">
+        pname,
+      </if>
+      <if test="page != null">
+        page,
+      </if>
+      <if test="psex != null">
+        psex,
+      </if>
+      <if test="ptype != null">
+        ptype,
+      </if>
+      <if test="pdate != null">
+        pdate,
+      </if>
+      <if test="psale != null">
+        psale,
+      </if>
+      <if test="pimage != null">
+        pimage,
+      </if>
+      <if test="pdesc != null">
+        pdesc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="pname != null">
+        #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="page != null">
+        #{page,jdbcType=TIMESTAMP},
+      </if>
+      <if test="psex != null">
+        #{psex,jdbcType=INTEGER},
+      </if>
+      <if test="ptype != null">
+        #{ptype,jdbcType=VARCHAR},
+      </if>
+      <if test="pdate != null">
+        #{pdate,jdbcType=DATE},
+      </if>
+      <if test="psale != null">
+        #{psale,jdbcType=INTEGER},
+      </if>
+      <if test="pimage != null">
+        #{pimage,jdbcType=VARCHAR},
+      </if>
+      <if test="pdesc != null">
+        #{pdesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yc.petshop.bean.PetsExample" resultType="java.lang.Long">
+    select count(*) from pets
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pets
+    <set>
+      <if test="record.pid != null">
+        pid = #{record.pid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pname != null">
+        pname = #{record.pname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.page != null">
+        page = #{record.page,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.psex != null">
+        psex = #{record.psex,jdbcType=INTEGER},
+      </if>
+      <if test="record.ptype != null">
+        ptype = #{record.ptype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pdate != null">
+        pdate = #{record.pdate,jdbcType=DATE},
+      </if>
+      <if test="record.psale != null">
+        psale = #{record.psale,jdbcType=INTEGER},
+      </if>
+      <if test="record.pimage != null">
+        pimage = #{record.pimage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pdesc != null">
+        pdesc = #{record.pdesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pets
+    set pid = #{record.pid,jdbcType=INTEGER},
+      pname = #{record.pname,jdbcType=VARCHAR},
+      page = #{record.page,jdbcType=TIMESTAMP},
+      psex = #{record.psex,jdbcType=INTEGER},
+      ptype = #{record.ptype,jdbcType=VARCHAR},
+      pdate = #{record.pdate,jdbcType=DATE},
+      psale = #{record.psale,jdbcType=INTEGER},
+      pimage = #{record.pimage,jdbcType=VARCHAR},
+      pdesc = #{record.pdesc,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <resultMap id="BaseResultMap" type="com.yc.petshop.bean.Pets">
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="pname" jdbcType="VARCHAR" property="pname" />
+    <result column="page" jdbcType="TIMESTAMP" property="page" />
+    <result column="psex" jdbcType="INTEGER" property="psex" />
+    <result column="ptype" jdbcType="VARCHAR" property="ptype" />
+    <result column="pdate" jdbcType="DATE" property="pdate" />
+    <result column="psale" jdbcType="INTEGER" property="psale" />
+    <result column="pimage" jdbcType="VARCHAR" property="pimage" />
+    <result column="pdesc" jdbcType="VARCHAR" property="pdesc" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    pid, pname, page, psex, ptype, pdate, psale, pimage, pdesc
+  </sql>
+  <select id="selectByExample" parameterType="com.yc.petshop.bean.PetsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pets
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.yc.petshop.bean.PetsExample">
+    delete from pets
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yc.petshop.bean.Pets">
+    insert into pets (pid, pname, page, 
+      psex, ptype, pdate, psale, 
+      pimage, pdesc)
+    values (#{pid,jdbcType=INTEGER}, #{pname,jdbcType=VARCHAR}, #{page,jdbcType=TIMESTAMP}, 
+      #{psex,jdbcType=INTEGER}, #{ptype,jdbcType=VARCHAR}, #{pdate,jdbcType=DATE}, #{psale,jdbcType=INTEGER}, 
+      #{pimage,jdbcType=VARCHAR}, #{pdesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yc.petshop.bean.Pets">
+    insert into pets
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="pname != null">
+        pname,
+      </if>
+      <if test="page != null">
+        page,
+      </if>
+      <if test="psex != null">
+        psex,
+      </if>
+      <if test="ptype != null">
+        ptype,
+      </if>
+      <if test="pdate != null">
+        pdate,
+      </if>
+      <if test="psale != null">
+        psale,
+      </if>
+      <if test="pimage != null">
+        pimage,
+      </if>
+      <if test="pdesc != null">
+        pdesc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="pname != null">
+        #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="page != null">
+        #{page,jdbcType=TIMESTAMP},
+      </if>
+      <if test="psex != null">
+        #{psex,jdbcType=INTEGER},
+      </if>
+      <if test="ptype != null">
+        #{ptype,jdbcType=VARCHAR},
+      </if>
+      <if test="pdate != null">
+        #{pdate,jdbcType=DATE},
+      </if>
+      <if test="psale != null">
+        #{psale,jdbcType=INTEGER},
+      </if>
+      <if test="pimage != null">
+        #{pimage,jdbcType=VARCHAR},
+      </if>
+      <if test="pdesc != null">
+        #{pdesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yc.petshop.bean.PetsExample" resultType="java.lang.Long">
+    select count(*) from pets
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pets
+    <set>
+      <if test="record.pid != null">
+        pid = #{record.pid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pname != null">
+        pname = #{record.pname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.page != null">
+        page = #{record.page,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.psex != null">
+        psex = #{record.psex,jdbcType=INTEGER},
+      </if>
+      <if test="record.ptype != null">
+        ptype = #{record.ptype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pdate != null">
+        pdate = #{record.pdate,jdbcType=DATE},
+      </if>
+      <if test="record.psale != null">
+        psale = #{record.psale,jdbcType=INTEGER},
+      </if>
+      <if test="record.pimage != null">
+        pimage = #{record.pimage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pdesc != null">
+        pdesc = #{record.pdesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pets
+    set pid = #{record.pid,jdbcType=INTEGER},
+      pname = #{record.pname,jdbcType=VARCHAR},
+      page = #{record.page,jdbcType=TIMESTAMP},
+      psex = #{record.psex,jdbcType=INTEGER},
+      ptype = #{record.ptype,jdbcType=VARCHAR},
+      pdate = #{record.pdate,jdbcType=DATE},
+      psale = #{record.psale,jdbcType=INTEGER},
+      pimage = #{record.pimage,jdbcType=VARCHAR},
+      pdesc = #{record.pdesc,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
